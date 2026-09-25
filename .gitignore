@@ -1,0 +1,12 @@
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Local secrets — the real API key lives only in Vercel's settings
+.env
+.env.*
+
+# Vercel / tooling
+.vercel
+node_modules/

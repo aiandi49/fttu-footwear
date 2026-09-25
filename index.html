@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark" data-default-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>F.T.T.U Footwear — Live Design Showroom</title>
+<meta name="description" content="Tell the F.T.T.U showroom what you're looking for and it pulls up the matching concept designs — sneakers, boots, sandals, heels and more, in every seasonal colorway.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://mlgmigguhljsiopctkkj.supabase.co" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/engine.css">
+<link rel="stylesheet" href="css/lightbox.css">
+<script>try{var t=localStorage.getItem('fttu-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+</head>
+<body>
+
+<div class="stage">
+  <header class="topbar">
+    <nav class="nav" aria-label="Main">
+      <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span>F.T.T.U</a>
+      <div class="nav-links">
+        <a href="index.html" aria-current="page">Showroom</a>
+        <a href="guide.html">Guide</a>
+        <button class="pill-btn js-theme" type="button"><span class="sun" aria-hidden="true"></span><span class="js-theme-label">Light mode</span></button>
+        <button class="pill-btn js-size" type="button" aria-label="Text size: Normal"><span class="aa">Aa</span> <span class="js-size-label">Normal</span></button>
+        <a class="dim" href="guide.html#collection">Collection</a>
+      </div>
+      <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span></span></button>
+    </nav>
+    <div class="menu" id="menu">
+      <a href="index.html" aria-current="page">Showroom</a>
+      <a href="guide.html">Guide</a>
+      <a href="guide.html#collection">Full collection</a>
+      <div class="menu-controls">
+        <button class="pill-btn js-theme" type="button"><span class="sun" aria-hidden="true"></span><span class="js-theme-label">Light mode</span></button>
+        <button class="pill-btn js-size" type="button" aria-label="Text size: Normal"><span class="aa">Aa</span> <span class="js-size-label">Normal</span></button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <span class="hero-tag" id="heroTag">Concept collection</span>
+    <h1>Live design <span class="grad">showroom.</span></h1>
+    <p>Tell it what you're looking for — the conversation on the left, the design on the right, all live from the F.T.T.U footwear line.</p>
+    <a class="hero-link" href="guide.html#lookbook">Prefer to browse? See all 41 images &rarr;</a>
+  </section>
+
+  <section class="board" aria-label="Showroom">
+    <div class="card chat" id="chat">
+      <div class="chat-head">
+        <h2>F.T.T.U showroom</h2>
+        <p class="sub">Concept designs only</p>
+        <span class="count-chip" id="countChip"><span class="dot"></span><span id="countLabel">0 messages this session</span></span>
+        <div class="head-icons">
+          <button class="icon" id="resetBtn" type="button" title="Start over" aria-label="Start over">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 8a5.5 5.5 0 1 1-1.6-3.9"/><path d="M13.5 2.5v3h-3"/></svg>
+          </button>
+          <button class="icon" id="expandBtn" type="button" title="Expand chat" aria-label="Expand chat" aria-pressed="false">
+            <svg class="ico-expand" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6V2.5H6M10 2.5h3.5V6M13.5 10v3.5H10M6 13.5H2.5V10"/></svg>
+            <svg class="ico-collapse" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2.5V6H2.5M13.5 6H10V2.5M10 13.5V10h3.5M2.5 10H6v3.5"/></svg>
+          </button>
+        </div>
+      </div>
+      <div class="messages" id="messages" aria-live="polite"></div>
+      <div class="composer">
+        <label for="chatInput" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);">Your message</label>
+        <textarea id="chatInput" rows="1" placeholder="Ask anything…"></textarea>
+        <button class="mic" id="micBtn" type="button" title="Speak instead" aria-label="Speak instead">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><rect x="5.5" y="1.5" width="5" height="8.5" rx="2.5"/><path d="M3 7.5a5 5 0 0 0 10 0M8 12.5v2"/></svg>
+        </button>
+        <button class="send" id="sendBtn" type="button">Send</button>
+      </div>
+      <p class="voice-note" id="voiceNote" hidden></p>
+    </div>
+
+    <div class="card result" id="matchCard">
+      <span class="match-tag" id="matchTag">Featured</span>
+      <div class="shot zoomable" id="matchShot" role="button" tabindex="0" aria-label="View this design full screen"><img id="matchImg" alt="" width="1264" height="848" decoding="async"></div>
+      <div class="match-name" id="matchName">—</div>
+      <div class="block-title" id="matchWhere">—</div>
+      <p class="block-text" id="matchNotes"></p>
+      <div class="divider">
+        <div class="card-row"><span class="block-title">Season</span><span class="block-title" id="detailValue">—</span></div>
+        <div class="line-item"><span id="detailLine"></span></div>
+        <div class="gauge"></div>
+      </div>
+    </div>
+
+    <div class="card result">
+      <div class="card-row"><h3 class="mini-h" id="shortTitle">In season</h3><h3 class="mini-h" id="shortValue">—</h3></div>
+      <div class="donut-wrap">
+        <div class="donut" role="img" id="donut" aria-label="">
+          <svg viewBox="0 0 100 100" aria-hidden="true">
+            <defs><linearGradient id="arcGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6a4be8"/><stop offset="1" stop-color="#c4b5fd"/></linearGradient></defs>
+            <circle class="track" cx="50" cy="50" r="40" fill="none" stroke-width="9"/>
+            <circle class="arc" id="arc" cx="50" cy="50" r="40" fill="none" stroke="url(#arcGrad)" stroke-width="9" stroke-linecap="round" stroke-dasharray="251.33" stroke-dashoffset="251.33"/>
+          </svg>
+          <div class="center"><span class="pct" id="pct">0%</span><span class="lbl" id="pctLabel"></span></div>
+        </div>
+      </div>
+      <p class="center-text" id="shortText"></p>
+      <div class="thumbs" id="thumbs" role="group" aria-label="Designs in this shortlist"></div>
+    </div>
+
+    <div class="card result">
+      <h3 class="mini-h">Listing details</h3>
+      <ul class="terms">
+        <li><span>Category</span><span id="tCategory">—</span></li>
+        <li><span>Design ID</span><span id="tId">—</span></li>
+        <li><span>Colorway</span><span id="tColorway">—</span></li>
+        <li><span>Status</span><span>Concept</span></li>
+      </ul>
+      <div class="next">
+        <div class="block-title">Next step</div>
+        <p class="block-text" id="nextText"></p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="notes" aria-labelledby="notesTitle">
+  <div class="notes-inner">
+    <h2 id="notesTitle">What's real on this page</h2>
+    <p><strong>Live answers.</strong> The chat sends your conversation to a small backend (<code>/api/chat</code>) that calls the Claude API. Claude reasons only over the F.T.T.U catalog loaded on this page — 32 concept designs across 11 categories — and every reply is written fresh. Tap the big picture to see it full screen and swipe through the set. The three cards fill from that same catalog the moment a design is named, so nothing on the right is invented.</p>
+    <p><strong>Concept stage, honestly.</strong> Every image is an AI-generated concept render. There are no sizes, no prices and nothing to buy yet. The showroom exists to show the line and hear what people think before anything is made.</p>
+    <p><strong>What it can't do yet.</strong> It can't take a vote, save a favorite to an account, or place an order. Voting is planned for phase two and needs a small database behind it.</p>
+    <p><strong>Voice stays on your device.</strong> The mic uses your browser's built-in speech recognition to turn speech into text before you send it. Chrome, Edge and Safari support it; where a browser doesn't, the mic hides itself.</p>
+  </div>
+</section>
+
+<footer>F.T.T.U — From Them… to Us… · <a href="guide.html">Open the guide</a></footer>
+
+<script>
+/* Page controls — theme toggle, text size, phone menu.
+   Inline on purpose: they keep working even if a page is opened on its own. */
+(function(){
+  var root=document.documentElement, KEY='fttu-theme', def=root.getAttribute('data-default-theme')||'light';
+  function saved(){ try{ return localStorage.getItem(KEY); }catch(e){ return null; } }
+  function apply(t){
+    root.setAttribute('data-theme',t);
+    var labels=document.querySelectorAll('.js-theme-label');
+    for(var i=0;i<labels.length;i++) labels[i].textContent = t==='dark' ? 'Light mode' : 'Dark mode';
+    var b=document.querySelectorAll('.js-theme');
+    for(var j=0;j<b.length;j++) b[j].setAttribute('aria-pressed', String(t==='dark'));
+  }
+  var s=saved(); apply(s==='light'||s==='dark' ? s : def);
+  document.addEventListener('click',function(e){
+    var t=e.target.closest && e.target.closest('.js-theme');
+    if(t){ var next=root.getAttribute('data-theme')==='dark'?'light':'dark'; apply(next); try{ localStorage.setItem(KEY,next); }catch(err){} return; }
+    var z=e.target.closest && e.target.closest('.js-size');
+    if(z){
+      var steps=[['','Normal'],['fs-lg','Large'],['fs-xl','Larger'],['fs-sm','Small']];
+      var cur=root.getAttribute('data-size-step')|0, n=(cur+1)%steps.length;
+      root.classList.remove('fs-sm','fs-lg','fs-xl'); if(steps[n][0]) root.classList.add(steps[n][0]);
+      root.setAttribute('data-size-step',n);
+      var l=document.querySelectorAll('.js-size-label'); for(var k=0;k<l.length;k++) l[k].textContent=steps[n][1];
+      var zb=document.querySelectorAll('.js-size'); for(var m=0;m<zb.length;m++) zb[m].setAttribute('aria-label','Text size: '+steps[n][1]);
+      return;
+    }
+    var bg=e.target.closest && e.target.closest('#burger'), menu=document.getElementById('menu');
+    if(bg && menu){ var o=!menu.classList.contains('open'); menu.classList.toggle('open',o); bg.setAttribute('aria-expanded',String(o)); bg.setAttribute('aria-label',o?'Close menu':'Open menu'); return; }
+    if(menu && menu.classList.contains('open') && e.target.closest && e.target.closest('#menu a')){ menu.classList.remove('open'); var bb=document.getElementById('burger'); if(bb) bb.setAttribute('aria-expanded','false'); }
+  });
+})();
+</script>
+<script>
+/* If the page was opened by itself (for example straight out of the zip), say so plainly instead of showing empty boxes. */
+window.addEventListener('load',function(){
+  if(window.FTTU) return;
+  var n=document.createElement('div'); n.setAttribute('role','alert');
+  n.style.cssText='position:relative;z-index:100;margin:0;padding:14px 18px;background:#fff4d6;color:#3a2a00;border-bottom:2px solid #e0a51d;font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;text-align:center;';
+  n.innerHTML='<strong>This page opened without the rest of its folder.</strong> Right-click the zip, choose <em>Extract All</em>, then open <em>index.html</em> from inside the extracted <em>fttu-footwear</em> folder. The pictures, carousel and showroom all load from the files next to it.';
+  document.body.insertBefore(n,document.body.firstChild);
+});
+</script>
+<script src="js/catalog.js"></script>
+<script src="js/lightbox.js"></script>
+<script src="js/engine.js"></script>
+</body>
+</html>

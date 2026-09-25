@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light" data-default-theme="light" data-season="fall">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>F.T.T.U Footwear — The Guide</title>
+<meta name="description" content="The F.T.T.U footwear line in concept: every category, every seasonal colorway, the calendar the site follows, and the road from design to manufacturing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://mlgmigguhljsiopctkkj.supabase.co" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,600;0,8..60,700;1,8..60,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+  /* set the season before first paint so the page never flashes the wrong palette */
+  (function(){
+    var m=new Date().getMonth();
+    var s=(m===11||m<=1)?'winter':(m<=4)?'spring':(m<=7)?'summer':'fall';
+    document.documentElement.setAttribute('data-season',s);
+  })();
+</script>
+<link rel="stylesheet" href="css/guide.css">
+<link rel="stylesheet" href="css/lightbox.css">
+<script>try{var t=localStorage.getItem('fttu-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+</head>
+<body>
+
+<header class="topbar">
+  <nav class="nav wrap" aria-label="Main">
+    <a class="brand" href="guide.html"><span class="brand-mark" aria-hidden="true"></span>F.T.T.U <small>Footwear</small></a>
+    <div class="nav-links">
+      <a href="#lookbook">Lookbook</a>
+      <a href="#emblem">Emblem</a>
+      <a href="#collection">Collection</a>
+      <a href="#seasons">Seasons</a>
+      <a href="#apparel">Apparel</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#five-ws">The 5 W's</a>
+      <button class="ctrl js-size" type="button" aria-label="Text size: Normal"><strong>Aa</strong> <span class="js-size-label">Normal</span></button>
+      <button class="ctrl js-theme" type="button"><span class="dot" aria-hidden="true"></span><span class="js-theme-label">Dark mode</span></button>
+      <a class="btn btn-solid" href="index.html">Open the showroom</a>
+    </div>
+    <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span></span></button>
+  </nav>
+  <div class="menu" id="menu">
+    <a href="#lookbook">Lookbook</a>
+    <a href="#emblem">Emblem</a>
+    <a href="#collection">Collection</a>
+    <a href="#seasons">Seasons</a>
+    <a href="#apparel">Apparel</a>
+    <a href="#roadmap">Roadmap</a>
+    <a href="#five-ws">The 5 W's</a>
+    <div class="menu-controls">
+      <button class="ctrl js-size" type="button" aria-label="Text size: Normal"><strong>Aa</strong> <span class="js-size-label">Normal</span></button>
+      <button class="ctrl js-theme" type="button"><span class="dot" aria-hidden="true"></span><span class="js-theme-label">Dark mode</span></button>
+      <a class="btn btn-solid" href="index.html">Open the showroom</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="ornaments" id="ornaments" aria-hidden="true"></div>
+    <div class="hero-grid wrap">
+      <div>
+        <span class="season-badge"><span class="dot" aria-hidden="true"></span><span id="seasonBadge">Fall collection</span><span class="holiday" id="holiday" hidden></span></span>
+        <h1>From them, <em>to us</em> &mdash; one pair at a time.</h1>
+        <p class="lede">F.T.T.U Footwear is a new line in concept: sneakers, boots, sandals, heels, kids' shoes and snow gear, each in a signature seafoam-and-teal look plus a colorway for every season. Nothing is for sale yet. This guide shows the whole line and where it's headed.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-solid" href="index.html">Ask the showroom</a>
+          <a class="btn btn-ghost" href="#lookbook">See all 41 images</a>
+        </div>
+      </div>
+      <figure class="frame zoomable" id="heroFig" role="button" tabindex="0" aria-label="View this design full screen">
+        <div class="ratio"><img id="heroImg" alt="" width="1264" height="848" decoding="async" fetchpriority="high"></div>
+        <figcaption><span><strong id="heroName">F.T.T.U Sneaker</strong></span><span>AI concept render</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section lookbook" id="lookbook" aria-labelledby="lookTitle">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">The lookbook</span>
+        <h2 id="lookTitle">Every image, one swipe at a time</h2>
+        <p>All <span id="lookTotal">41</span> concept images &mdash; the emblem, every shoe in every colorway, the snow gear, the jacket and the jacket on real people. Swipe, use the arrows, or tap any image to see it full screen.</p>
+      </div>
+      <div class="filters" id="lookFilters" role="group" aria-label="Filter the lookbook"></div>
+    </div>
+    <div class="carousel" id="carousel">
+      <div class="track" id="track" tabindex="0" role="region" aria-roledescription="carousel" aria-label="Lookbook images"></div>
+      <button type="button" class="car-btn car-prev" id="carPrev" aria-label="Previous image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <button type="button" class="car-btn car-next" id="carNext" aria-label="Next image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
+    <div class="wrap">
+      <div class="car-meta">
+        <div class="car-caption"><strong id="carTitle"></strong><span id="carCaption"></span></div>
+        <div class="car-count"><span id="carCount">1 / 41</span><span class="car-progress"><i id="carBar"></i></span></div>
+      </div>
+      <div class="thumbstrip" id="thumbstrip" role="group" aria-label="Jump to an image"></div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="whatTitle">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">What this is</span>
+        <h2 id="whatTitle">A brand built in the open</h2>
+        <p>People are moving their money toward smaller brands that see them. This line is getting ready for them — starting with the designs, and asking for opinions before anything gets made.</p>
+      </div>
+      <div class="points">
+        <div class="point"><span class="num">01</span><h3>Concept stage</h3><p>Every design here is an AI-generated concept render. There are no sizes, prices or orders yet — the goal right now is to show the line and hear what people think.</p></div>
+        <div class="point"><span class="num">02</span><h3>Made for everybody</h3><p>The signature look is seafoam fading into deep teal, finished with the F.T.U. shield. It's meant to feel welcoming to anyone who puts it on.</p></div>
+        <div class="point"><span class="num">03</span><h3>Dressed for the season</h3><p>Most styles come in spring, summer, fall and winter colorways. This guide changes its own colors with the calendar, so it always looks like the season you're in.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section emblem-sec" id="emblem" aria-labelledby="embTitle">
+    <div class="wrap emblem-grid">
+      <figure class="frame zoomable" id="emblemFig" role="button" tabindex="0" aria-label="View the emblem full screen">
+        <div class="ratio"><img id="emblemImg" alt="Silver F.T.U. shield emblem reading Est. 2026, M W, From Them To Us" width="1264" height="847" loading="lazy" decoding="async"></div>
+        <figcaption><span><strong>The F.T.U. shield</strong></span><span>AI concept render</span></figcaption>
+      </figure>
+      <div class="emblem-copy">
+        <span class="kicker">The mark</span>
+        <h2 id="embTitle">One bold T carries both</h2>
+        <p>The footwear emblem is a silver shield that reads <strong>F.T.U.</strong> The single, oversized T stands for both T's in <em>From Them To Us</em> — fewer letters, so it stays crisp on a heel tab, a strap or the top of a board.</p>
+        <ul class="emblem-facts">
+          <li><strong>M W</strong> — men and women. The line is built for both.</li>
+          <li><strong>Est. 2026</strong> — the year it started.</li>
+          <li><strong>From Them… To Us…</strong> — around the bottom edge, the whole idea in four words.</li>
+        </ul>
+        <p class="emblem-note">The footwear carries the shield. The clothing line will have its own F.T.T.U. lettering, like the one on the jacket.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section tint" id="collection" aria-labelledby="colTitle">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">The collection</span>
+        <h2 id="colTitle">Every category, every colorway</h2>
+        <p id="colLede">Each card opens on this season's colorway when there is one. Tap a color to swap it.</p>
+      </div>
+      <div class="filters" id="filters" role="group" aria-label="Filter by category"></div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <section class="section" id="seasons" aria-labelledby="seaTitle">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">The calendar</span>
+        <h2 id="seaTitle">Four seasons, four looks</h2>
+        <p>The guide follows meteorological seasons — whole calendar months — so the look changes cleanly on the 1st. The showroom stays the same all year.</p>
+      </div>
+      <div class="seasons" id="seasonCards"></div>
+      <p class="season-note"><strong>Why whole months?</strong> The astronomical seasons start on the equinoxes and solstices, which land on a different day each year (in 2026: March 20, June 20, September 22 and December 21 in U.S. time zones). Switching on the 1st is simpler, and it's how weather services count seasons too. These dates are for the Northern Hemisphere.</p>
+    </div>
+  </section>
+
+  <section class="section tint" id="apparel" aria-labelledby="appTitle">
+    <div class="wrap">
+      <div class="apparel">
+        <div class="apparel-copy">
+          <span class="kicker">Coming later</span>
+          <h2 id="appTitle" style="font-size:calc(clamp(30px,4vw,46px) * var(--fs)); margin-top:8px;">The clothing line starts with a jacket</h2>
+          <figure class="frame" style="margin-top:22px;">
+            <div class="ratio"><img id="jacketImg" alt="F.T.T.U track jacket, seafoam fading to teal, concept render" width="1264" height="848" loading="lazy" decoding="async"></div>
+            <figcaption><span><strong>F.T.T.U Track Jacket</strong></span><span>AI concept render</span></figcaption>
+          </figure>
+          <p>Footwear comes first. The track jacket is the first sketch of the clothing line that follows — same seafoam-to-teal fade, same chest patch.</p>
+          <span class="label">The photos are real people with the concept jacket digitally added. The jacket hasn't been made yet.</span>
+        </div>
+        <div class="mock-grid" id="mocks"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="roadmap" aria-labelledby="roadTitle">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">The road ahead</span>
+        <h2 id="roadTitle">Crawl, walk, run</h2>
+        <p>Build the foundation first. Each phase only starts once the one before it works.</p>
+      </div>
+      <div class="road">
+        <div class="step current"><span class="phase">Phase 1 · Now</span><h3>Show the line</h3><p>The concept designs, this guide, and the showroom that lets anyone ask what exists and see it instantly.</p></div>
+        <div class="step"><span class="phase">Phase 2</span><h3>Let people vote</h3><p>Favorites and votes on each design, so the first styles to make are the ones people actually want.</p></div>
+        <div class="step"><span class="phase">Phase 3</span><h3>Samples and partners</h3><p>Turn the winning designs into real specs, find a manufacturer, and make test pairs.</p></div>
+        <div class="step"><span class="phase">Phase 4</span><h3>Sizes and launch</h3><p>Ladies' and men's versions, full size runs, and the clothing line behind the jacket.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section tint" id="five-ws" aria-labelledby="wsTitle">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="kicker">Getting it made</span>
+        <h2 id="wsTitle">The 5 W's of manufacturing</h2>
+        <p>The questions the line has to answer to get from a render to a real shoe. Where there's no answer yet, it says so.</p>
+      </div>
+      <div class="ws">
+        <div class="w"><h3><span>Who</span> makes it?</h3><p class="status">Not chosen yet. Brands this size usually hire a contract manufacturer that builds to the brand's own designs.</p>
+          <ul><li>Which factories make knit sneakers, boots and sandals?</li><li>Who backs early-stage founders, and who comes in later?</li><li>Who else is building in this space?</li></ul></div>
+        <div class="w"><h3><span>What</span> gets made first?</h3><p class="status">Decided by the phase-two votes. Each winning design then needs technical specs a factory can build from.</p>
+          <ul><li>Which one or two styles lead?</li><li>What materials and colors, exactly?</li><li>What does a first sample cost?</li></ul></div>
+        <div class="w"><h3><span>When</span> does it happen?</h3><p class="status">No dates yet, on purpose. Votes come before any manufacturing conversation.</p>
+          <ul><li>When to start talking to manufacturers?</li><li>When to approach investors?</li><li>When would a first run realistically ship?</li></ul></div>
+        <div class="w"><h3><span>Where</span> does it come from?</h3><p class="status">Open. Location affects cost, quality checks and how fast samples arrive.</p>
+          <ul><li>Where are the manufacturer and materials?</li><li>Where does the funding come from?</li><li>Where will it be sold — online first?</li></ul></div>
+        <div class="w"><h3><span>Why</span> now?</h3><p class="status">Because people are actively redirecting what they spend. A brand that's ready when they look is in the right place.</p>
+          <ul><li>Why a manufacturer instead of going solo?</li><li>Why partners, and which kind?</li><li>Why this line, and not later?</li></ul></div>
+        <div class="w"><h3><span>How</span> you can help</h3><p class="status">Right now the most useful thing is an opinion.</p>
+          <ul><li>Tell the showroom which designs you'd wear.</li><li>Say which season's colors you like best.</li><li>Tell us what's missing from the line.</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="closing">
+    <div class="wrap">
+      <h2>See something you'd wear?</h2>
+      <p>Ask the showroom — name a style, a season or a mood and it pulls up the designs.</p>
+      <div class="hero-ctas"><a class="btn btn-solid" href="index.html">Open the showroom</a></div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap"><span>F.T.T.U — From Them… to Us… · Footwear concept line</span><span>All images are AI-generated concept renders. Nothing here is for sale yet. <a href="index.html">Showroom</a></span></div></footer>
+
+<div id="previewBar" role="status"><span id="previewText">Previewing winter</span><button type="button" id="previewReset">Back to today</button></div>
+
+<script>
+/* Page controls — theme toggle, text size, phone menu.
+   Inline on purpose: they keep working even if a page is opened on its own. */
+(function(){
+  var root=document.documentElement, KEY='fttu-theme', def=root.getAttribute('data-default-theme')||'light';
+  function saved(){ try{ return localStorage.getItem(KEY); }catch(e){ return null; } }
+  function apply(t){
+    root.setAttribute('data-theme',t);
+    var labels=document.querySelectorAll('.js-theme-label');
+    for(var i=0;i<labels.length;i++) labels[i].textContent = t==='dark' ? 'Light mode' : 'Dark mode';
+    var b=document.querySelectorAll('.js-theme');
+    for(var j=0;j<b.length;j++) b[j].setAttribute('aria-pressed', String(t==='dark'));
+  }
+  var s=saved(); apply(s==='light'||s==='dark' ? s : def);
+  document.addEventListener('click',function(e){
+    var t=e.target.closest && e.target.closest('.js-theme');
+    if(t){ var next=root.getAttribute('data-theme')==='dark'?'light':'dark'; apply(next); try{ localStorage.setItem(KEY,next); }catch(err){} return; }
+    var z=e.target.closest && e.target.closest('.js-size');
+    if(z){
+      var steps=[['','Normal'],['fs-lg','Large'],['fs-xl','Larger'],['fs-sm','Small']];
+      var cur=root.getAttribute('data-size-step')|0, n=(cur+1)%steps.length;
+      root.classList.remove('fs-sm','fs-lg','fs-xl'); if(steps[n][0]) root.classList.add(steps[n][0]);
+      root.setAttribute('data-size-step',n);
+      var l=document.querySelectorAll('.js-size-label'); for(var k=0;k<l.length;k++) l[k].textContent=steps[n][1];
+      var zb=document.querySelectorAll('.js-size'); for(var m=0;m<zb.length;m++) zb[m].setAttribute('aria-label','Text size: '+steps[n][1]);
+      return;
+    }
+    var bg=e.target.closest && e.target.closest('#burger'), menu=document.getElementById('menu');
+    if(bg && menu){ var o=!menu.classList.contains('open'); menu.classList.toggle('open',o); bg.setAttribute('aria-expanded',String(o)); bg.setAttribute('aria-label',o?'Close menu':'Open menu'); return; }
+    if(menu && menu.classList.contains('open') && e.target.closest && e.target.closest('#menu a')){ menu.classList.remove('open'); var bb=document.getElementById('burger'); if(bb) bb.setAttribute('aria-expanded','false'); }
+  });
+})();
+</script>
+<script>
+/* If the page was opened by itself (for example straight out of the zip), say so plainly instead of showing empty boxes. */
+window.addEventListener('load',function(){
+  if(window.FTTU) return;
+  var n=document.createElement('div'); n.setAttribute('role','alert');
+  n.style.cssText='position:relative;z-index:100;margin:0;padding:14px 18px;background:#fff4d6;color:#3a2a00;border-bottom:2px solid #e0a51d;font:15px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;text-align:center;';
+  n.innerHTML='<strong>This page opened without the rest of its folder.</strong> Right-click the zip, choose <em>Extract All</em>, then open <em>index.html</em> from inside the extracted <em>fttu-footwear</em> folder. The pictures, carousel and showroom all load from the files next to it.';
+  document.body.insertBefore(n,document.body.firstChild);
+});
+</script>
+<script src="js/catalog.js"></script>
+<script src="js/lightbox.js"></script>
+<script src="js/guide.js"></script>
+</body>
+</html>
