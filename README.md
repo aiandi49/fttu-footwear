@@ -3,7 +3,7 @@
 A concept footwear line — sneakers, boots, sandals, flip-flops, heels, hiking boots, kids' and baby shoes, snow gear, and the first piece of a clothing line — shown two ways:
 
 - **`index.html` — the showroom (the engine).** The landing page. Visitors type what they want; Claude answers from the catalog, pictures show up right in the chat, and the three side cards fill with the design, its other colorways and its details. Tap the big picture to see it full screen. It looks the same all year.
-- **`guide.html` — the guide (the GUB).** A big swipeable lookbook of all 41 images, the F.T.U. emblem and what it means, every category with its colorways, the seasonal calendar, the apparel preview, the roadmap and the 5 W's of manufacturing. Its colors change with the season on their own.
+- **`guide.html` — the guide (the GUB).** A big swipeable lookbook of all 52 images, the F.T.U. emblem and what it means, every category with its colorways, an exploded "how it's built" drawing and parts list for all 11 products (printable as spec sheets for manufacturers), the seasonal calendar, the apparel preview, the roadmap and the 5 W's of manufacturing. Its colors change with the season on their own.
 
 Every image is an AI-generated concept render. Nothing is for sale yet. Every picture on both pages opens full size when tapped.
 
@@ -36,7 +36,7 @@ fttu-footwear/
 
 1. **Unzip first.** Right-click `fttu-footwear.zip` → **Extract All**. Double-clicking a file *inside* the zip opens it alone, without the `css`, `js` and `assets` folders next to it, and you'll just see empty boxes (the page now tells you this if it happens).
 2. Open the extracted `fttu-footwear` folder and double-click `index.html` (the showroom) or `guide.html` (the guide).
-3. Everything works this way — all 41 pictures, the lookbook carousel, full-screen view, theme toggle, text size — **except the chat**, which needs the site running on Vercel with your API key.
+3. Everything works this way — all 52 pictures, the lookbook carousel, full-screen view, theme toggle, text size — **except the chat**, which needs the site running on Vercel with your API key.
 
 ## Put it on GitHub (GitHub Desktop)
 
@@ -63,4 +63,5 @@ The switch happens in each visitor's browser from their own date, so nothing nee
 
 1. Upload the image to the Supabase bucket, in its category folder.
 2. Add one line to the list in `js/catalog.js`: category, colorway, image path, one-sentence description.
-3. Commit and push in GitHub Desktop. The showroom, its AI answers, the lookbook and the collection all pick it up.
+3. (Optional) Add its exploded drawing to `breakdowns/` in the bucket and a parts list to `BREAKDOWNS` in `js/catalog.js`.
+4. Commit and push in GitHub Desktop. The showroom, its AI answers, the lookbook and the collection all pick it up.
