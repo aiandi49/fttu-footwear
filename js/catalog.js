@@ -97,6 +97,141 @@
     { path: 'future/bodybuilder-1.jpg', alt: 'Athlete flexing in a locker room wearing the concept jacket' , w: 896, h: 1200 }
   ].map(function (m) { m.image = BASE + m.path; return m; });
 
+  /* Exploded "how it's built" breakdowns — one per product (11).
+     Part names come from the concept renders, cleaned up. They describe the concept;
+     materials and specs get confirmed with a manufacturer. */
+  var BREAKDOWNS = {
+    'sneakers': { path: 'breakdowns/sneaker.jpg', title: 'Sneaker \u2014 exploded view', parts: [
+      ['Knit upper', 'Seafoam-to-teal engineered knit'],
+      ['Padded collar', 'Cushioned opening around the ankle'],
+      ['Laces, eyelets & lace stay', 'Flat laces through a reinforced eyelet strip'],
+      ['Heel counter', 'Molded navy cup that holds the heel in place'],
+      ['F.T.U. heel badge', 'Layered shield patch on the outer heel'],
+      ['Molded toe cap', 'Navy forefoot cap for scuff protection'],
+      ['Removable insole', 'Branded, cushioned footbed'],
+      ['Strobel board', 'Fabric board stitched to the upper'],
+      ['Midsole', 'Impact-absorbing foam'],
+      ['Outsole', 'Rubber base with segmented traction pods'] ] },
+    'boots': { path: 'breakdowns/boot.jpg', title: 'Trail sneaker boot \u2014 exploded view', parts: [
+      ['Structured mesh upper', 'Main upper panel'],
+      ['Padded ankle collar', 'Ankle support with a V-groove detail'],
+      ['Gusseted mesh tongue', 'Padded, sewn to the sides to keep debris out'],
+      ['D-ring lacing system', 'High-strength rings and laces'],
+      ['Pull tabs', 'Heel pull loop'],
+      ['Internal heel counter', 'Reinforced heel support'],
+      ['Navy heel wrap', 'Stabilizing PU wrap with F.T.T.U. lettering'],
+      ['Toe rand', 'Abrasion-resistant toe protection'],
+      ['Removable insole', 'Cushioned footbed'],
+      ['Strobel lasting board', 'Flexible board under the footbed'],
+      ['Midsole', 'Lightweight Phylon/EVA foam'],
+      ['Outsole', 'Aggressive-tread rubber for traction'] ] },
+    'sandals': { path: 'breakdowns/sandal.jpg', title: 'Sandal \u2014 exploded view', parts: [
+      ['Woven cross-strap upper', 'Crossover straps with visible stitching'],
+      ['Elasticated knit heel strap', 'Stretch strap around the heel'],
+      ['Side panel emblem', 'Embossed F.T.U. shield in a metallic silver finish'],
+      ['Contoured footbed', 'Cushioned EVA with a moisture-wicking liner'],
+      ['Mint EVA midsole', 'Contoured top layer'],
+      ['White EVA midsole', 'Durable base layer'],
+      ['Shank plate', 'Internal stabilizing plate'],
+      ['Outsole', 'Multi-directional rubber with flex grooves and lugs'] ] },
+    'flip-flops': { path: 'breakdowns/ff.jpg', title: 'Thong flip-flop \u2014 exploded view', parts: [
+      ['Woven knit upper strap', 'Breathable strap with soft padding'],
+      ['Padded toe post', 'Fabric-wrapped for comfort'],
+      ['Strap anchor', 'Locks the strap into the sole'],
+      ['Metal emblem', 'Polished stainless-steel F.T.U. shield on the strap'],
+      ['Footbed liner', 'Deep heel cup, arch support, moisture-wicking liner, embossed logo'],
+      ['Midsole', 'High-rebound foam with dual-density cushioning zones'],
+      ['Torsion plate', 'Internal stability plate'],
+      ['Outsole', 'Non-marking rubber with a multi-directional grooved tread'] ] },
+    'high-heels': { path: 'breakdowns/hh.jpg', title: 'High heel \u2014 exploded view', parts: [
+      ['Knit upper', 'Seamless engineered knit with a zoned gradient'],
+      ['Upper lining', 'Soft microfiber'],
+      ['Heel counter', 'Reinforced leather with embossed F.T.T.U. lettering'],
+      ['Toe rand', 'Protective leather toe'],
+      ['Insole', 'Ergonomic, cushioned'],
+      ['Bonding layers', 'Adhesive layers joining upper, insole and sole'],
+      ['Stiletto heel', 'Reinforced white heel with an internal steel shank'],
+      ['Platform midsole', 'Impact-absorbing white EVA'],
+      ['Outsole', 'Traction rubber'],
+      ['Heel tip', 'Replaceable non-slip rubber tip'] ] },
+    'hiking-boots': { path: 'breakdowns/hiking.jpg', title: 'Hiking boot \u2014 exploded view', parts: [
+      ['Knit upper', 'Breathable knit with reinforcement where it wears'],
+      ['Ankle collar', 'Memory-foam padding'],
+      ['Gusseted tongue', 'Padded, with interstitial mesh'],
+      ['Lacing system', 'Braided laces with metal eyelets and hooks'],
+      ['Heel pull tab', 'Nylon webbing'],
+      ['Suede heel counter', 'Stabilizing, with the embroidered shield logo'],
+      ['Waterproof lining', 'Full-bootie breathable membrane'],
+      ['Toe rand', 'Abrasion-resistant, textured'],
+      ['Removable footbed', 'Arch support and moisture management'],
+      ['Shank plate', 'Internal stiffness support'],
+      ['Strobel board', 'Lasting layer'],
+      ['Midsole', 'Teal-green EVA'],
+      ['Outsole', 'High-traction carbon rubber: deep multi-directional lugs, heel braking edge, climbing toe zone'] ] },
+    'kids': { path: 'breakdowns/kids.jpg', title: 'Kids\u2019 sneaker \u2014 exploded view', parts: [
+      ['Printed mesh upper', 'Star-print mesh'],
+      ['Toggle lacing', 'Elastic laces with a quick-pull toggle'],
+      ['Eyelets & hardware', 'Metal eyelets'],
+      ['Collar & tongue lining', 'Soft striped lining'],
+      ['Pull tab', 'Heel loop for easy on and off'],
+      ['Vamp overlay', 'Yellow toe reinforcement'],
+      ['Mid-foot & heel overlay', 'Red reinforcement with the star badge'],
+      ['Insole', 'Cushioned footbed'],
+      ['Strobel board', 'Stitched lasting board'],
+      ['Midsole', 'Mint foam'],
+      ['Outsole inserts', 'Colorful rubber pieces set into the sole'] ] },
+    'baby-shoes': { path: 'breakdowns/baby.jpg', title: 'Baby shoe \u2014 exploded view', parts: [
+      ['Mesh upper', 'Engineered mesh panels for breathability'],
+      ['Hook-and-loop strap', 'Quick-fasten closure'],
+      ['Padded tongue', 'With the brand star icon'],
+      ['Padded collar', 'Breathable lining'],
+      ['Heel pull tab', 'Nylon webbing'],
+      ['Star heel badge', 'Reinforced F.T.U. star badge'],
+      ['Toe rand', 'Molded toe protection'],
+      ['Removable insole', 'Ergonomic, cushioned'],
+      ['Strobel board', 'Internal'],
+      ['Midsole', 'Lightweight Phylon for impact absorption'],
+      ['Outsole', 'Segmented tread with flex grooves'] ] },
+    'snowboard': { path: 'breakdowns/snowboard.jpg', title: 'Snowboard \u2014 exploded view', parts: [
+      ['Topsheet', 'Abrasion-resistant sublimated graphic with the F.T.U. emblem'],
+      ['Triaxial fiberglass', 'Top layer for torsional stiffness'],
+      ['Binding inserts', 'Stainless-steel 4x2 insert pattern'],
+      ['Carbon stringers', 'Directional strips for snap and edge hold'],
+      ['Wood core', 'Profile-milled laminated poplar and aspen'],
+      ['Sidewalls', 'High-density ABS, impact-resistant'],
+      ['Biaxial fiberglass', 'Lower layer for flex'],
+      ['Rubber dampening', 'Internal layer to reduce chatter'],
+      ['Steel edges', 'Corrosion-resistant, fully wrapped'],
+      ['Base', 'Sintered P-Tex with a wax-absorbing structure'] ] },
+    'skis': { path: 'breakdowns/skis.jpg', title: 'Skis \u2014 exploded view', parts: [
+      ['Topsheet', 'Abrasion-resistant sublimated graphic with grip zones'],
+      ['Fiberglass laminate (top)', 'Multi-directional'],
+      ['Bonding layers', 'Industrial adhesive between layers'],
+      ['Bindings', 'Adjustable toe piece and step-in heel piece with a safety brake'],
+      ['Binding track', 'Modular mounting system'],
+      ['Wood core', 'Laminated poplar and paulownia'],
+      ['Sidewalls', 'High-density ABS'],
+      ['Rubber dampening', 'Internal layer'],
+      ['Fiberglass laminate (bottom)', 'Multi-directional'],
+      ['Steel edges', 'Hardened, high-strength'],
+      ['Base', 'Sintered P-Tex with stone-ground micro-grooves'] ] },
+    'apparel': { path: 'breakdowns/jacket.jpg', title: 'Track jacket \u2014 exploded view', parts: [
+      ['Body panels', 'Lightweight woven fabric with a textured finish'],
+      ['Gradient panels', 'Teal performance fabric fading seafoam to teal'],
+      ['Back panel', 'Seamless gradient'],
+      ['Sleeves', 'Articulated gradient panels'],
+      ['Collar', 'Flat-knit ribbed bomber collar, color-matched'],
+      ['Cuffs', 'Elasticated rib-knit'],
+      ['Zipper', 'Full-length, navy tape with a metallic slider'],
+      ['Pockets', 'Reinforced welt pockets'],
+      ['Chest emblem', 'Multi-layer chenille appliqu\u00e9 in navy, white and teal'],
+      ['Lining', 'Moisture-wicking satin mesh'],
+      ['Seams', 'Double-needle topstitching and serged edges'] ] }
+  };
+  Object.keys(BREAKDOWNS).forEach(function (k) {
+    var b = BREAKDOWNS[k]; b.category = k; b.image = BASE + b.path; b.w = 1264; b.h = 847;
+  });
+
   /* The shield emblem (concept render). */
   var EMBLEM = { path: 'emblem.jpg', image: BASE + 'emblem.jpg', w: 1264, h: 847, title: 'The F.T.U. shield', caption: 'The footwear emblem \u00b7 concept render',
     story: 'The footwear emblem is a silver shield that reads F.T.U. \u2014 one bold T stands for both T\u2019s in From Them To Us. Under it: Est. 2026, and M W for men and women. Around the bottom edge: From Them\u2026 To Us\u2026 The footwear carries this shield; the clothing line will use its own F.T.T.U. lettering.' };
@@ -111,6 +246,10 @@
     });
     MOCKUPS.forEach(function (m) {
       out.push({ src: m.image, w: m.w, h: m.h, title: 'F.T.T.U Track Jacket, worn', caption: 'Concept mockup \u00b7 jacket added to a real photo', group: 'mockups', alt: m.alt + ' (concept mockup)' });
+    });
+    CATEGORIES.forEach(function (c) {
+      var b = BREAKDOWNS[c.key]; if (!b) return;
+      out.push({ src: b.image, w: b.w, h: b.h, title: b.title, caption: 'How it\u2019s built \u00b7 ' + b.parts.length + ' parts \u00b7 concept render', group: 'breakdowns', alt: b.title + ', labeled component diagram' });
     });
     return out;
   }
@@ -137,6 +276,7 @@
     DESIGNS: DESIGNS,
     MOCKUPS: MOCKUPS,
     EMBLEM: EMBLEM,
+    BREAKDOWNS: BREAKDOWNS,
     lookbook: lookbook,
     COLORWAY_LABEL: COLORWAY_LABEL,
     SEASON_INFO: SEASON_INFO,

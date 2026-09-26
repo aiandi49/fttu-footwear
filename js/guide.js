@@ -90,6 +90,7 @@
       card.innerHTML='<div class="ratio" title="View larger"><img alt="" width="1264" height="848" loading="lazy" decoding="async"></div>'+
         '<div class="cat-body"><span class="kicker">'+list.length+(list.length===1?' colorway':' colorways')+'</span><h3>'+esc(c.label)+'</h3>'+
         '<span class="cw"></span><p class="desc"></p><div class="swatches" role="group" aria-label="'+esc(c.label)+' colorways">'+sw+'</div>'+
+        (F.BREAKDOWNS[c.key]?'<a class="build" href="#bd-'+c.key+'">See how it\u2019s built &rarr;</a>':'')+
         '<a class="ask" href="index.html">Ask the showroom about it &rarr;</a></div>';
       grid.appendChild(card);
       setCard(card, lead);
@@ -138,7 +139,7 @@
   /* ── lookbook: every image, big, in a swipeable carousel ── */
   var ALL=F.lookbook(), shown=ALL, active=0;
   var track=$('track'), strip=$('thumbstrip');
-  var GROUPS=[{key:'all',label:'Everything'},{key:'brand',label:'Emblem'}].concat(F.CATEGORIES.map(function(c){ return {key:c.key,label:c.label}; })).concat([{key:'mockups',label:'Worn'}]);
+  var GROUPS=[{key:'all',label:'Everything'},{key:'brand',label:'Emblem'}].concat(F.CATEGORIES.map(function(c){ return {key:c.key,label:c.label}; })).concat([{key:'mockups',label:'Worn'},{key:'breakdowns',label:'How it\u2019s built'}]);
   $('lookTotal').textContent=ALL.length;
   function buildLook(list){
     shown=list; active=0;
@@ -205,6 +206,40 @@
     });
   })();
   buildLook(ALL);
+
+  /* ── how it's built: one card per product, print-ready ── */
+  var BD_ORDER=F.CATEGORIES.map(function(c){ return F.BREAKDOWNS[c.key]; }).filter(Boolean);
+  var BD_ITEMS=BD_ORDER.map(function(b){ return {src:b.image, title:b.title, caption:b.parts.length+' parts \u00b7 concept render', alt:b.title+', labeled component diagram'}; });
+  $('bdCount').textContent=BD_ORDER.length;
+  $('bdGrid').innerHTML=BD_ORDER.map(function(b,k){
+    return '<article class="bd-card" id="bd-'+b.category+'">'+
+      '<div class="print-only sheet-top"><span>F.T.T.U Footwear \u00b7 Concept component sheet</span><span>'+(k+1)+' of '+BD_ORDER.length+'</span></div>'+
+      '<div class="ratio" role="button" tabindex="0" data-k="'+k+'" aria-label="View full size: '+esc(b.title)+'"><img src="'+esc(b.image)+'" alt="'+esc(b.title)+', labeled component diagram" width="1264" height="847" loading="lazy" decoding="async"></div>'+
+      '<div class="bd-body"><div class="bd-head"><h3>'+esc(b.title.replace(' \u2014 exploded view',''))+'</h3><span class="bd-count">'+b.parts.length+' parts</span></div>'+
+      '<ol class="bd-parts">'+b.parts.map(function(pt){ return '<li><strong>'+esc(pt[0])+'</strong><span>'+esc(pt[1])+'</span></li>'; }).join('')+'</ol>'+
+      '<div class="bd-links"><button type="button" data-k="'+k+'">View full size</button><a href="'+esc(b.image)+'" target="_blank" rel="noopener">Open the original image \u2197</a><a href="index.html?q='+encodeURIComponent('What is the '+F.CATEGORIES.filter(function(c){return c.key===b.category;})[0].one.replace(/\u2019/g,"'").toLowerCase()+' made of?')+'">Ask the showroom</a></div>'+
+      '<div class="print-only sheet-foot">Concept drawing \u2014 AI-generated. Part names describe the concept; measurements, materials, colors and costs to be confirmed with the manufacturer during sampling. Image: '+esc(b.image)+'</div>'+
+      '</div></article>';
+  }).join('');
+  $('bdGrid').addEventListener('click',function(e){
+    var t=e.target.closest('[data-k]'); if(!t || t.tagName==='A') return;
+    Lightbox.open(BD_ITEMS, +t.getAttribute('data-k'));
+  });
+  $('bdGrid').addEventListener('keydown',function(e){
+    var t=e.target.closest('.ratio[data-k]'); if(t && (e.key==='Enter'||e.key===' ')){ e.preventDefault(); Lightbox.open(BD_ITEMS, +t.getAttribute('data-k')); }
+  });
+  $('bdPrint').addEventListener('click',function(){
+    var btn=this, imgs=[].slice.call(document.querySelectorAll('#bdGrid img'));
+    btn.disabled=true; btn.textContent='Getting the drawings ready\u2026';
+    imgs.forEach(function(im){ im.loading='eager'; });
+    Promise.all(imgs.map(function(im){ return im.complete ? Promise.resolve() : new Promise(function(r){ im.onload=im.onerror=r; }); })).then(function(){
+      if(document.activeElement && document.activeElement.blur) document.activeElement.blur();
+      root.classList.add('print-sheets');
+      setTimeout(function(){ window.print(); }, 50);
+    });
+    function done(){ root.classList.remove('print-sheets'); btn.disabled=false; btn.textContent='Print or save the spec sheets (PDF)'; window.removeEventListener('afterprint',done); }
+    window.addEventListener('afterprint',done);
+  });
 
   /* ── every picture opens full size ── */
   function asItems(list){ return list.map(function(d){ return {src:d.image, title:d.name, caption:d.categoryLabel+' \u00b7 '+d.colorwayLabel+' colorway \u00b7 concept render', alt:d.name+', concept render'}; }); }

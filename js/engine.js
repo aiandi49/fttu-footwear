@@ -11,6 +11,12 @@ const CATALOG_TEXT = F.DESIGNS.map(function(d){
   return d.id + ' | ' + d.categoryLabel + ' | ' + d.colorwayLabel + (d.season===SEASON?' (in season now)':'') + ' | ' + d.description;
 }).join('\n');
 
+const CODE_BY_CAT = {}; F.CATEGORIES.forEach(function(c){ CODE_BY_CAT[c.key]=c.code; });
+const CAT_BY_CODE = {}; F.CATEGORIES.forEach(function(c){ CAT_BY_CODE[c.code]=c.key; });
+const BUILD_TEXT = F.CATEGORIES.filter(function(c){ return F.BREAKDOWNS[c.key]; }).map(function(c){
+  return 'BUILD-' + c.code + ' | ' + c.label + ' | ' + F.BREAKDOWNS[c.key].parts.map(function(pt){ return pt[0] + ' (' + pt[1] + ')'; }).join('; ');
+}).join('\n');
+
 const SYSTEM_PROMPT = [
   "You are the warm, concise showroom guide for F.T.T.U Footwear (From Them... to Us...), a new footwear line that is still at the concept stage.",
   "Everything you know about the line is the catalog below. Never invent a design, color, material, feature, size, price, release date or store. Every image is an AI-generated concept render; nothing has been manufactured or is for sale yet, and there are no sizes or prices. If asked to buy or for a size, say so plainly and warmly, and offer to show designs instead.",
@@ -21,6 +27,10 @@ const SYSTEM_PROMPT = [
   "",
   "CATALOG (id | category | colorway | description):",
   CATALOG_TEXT,
+  "",
+  "HOW EACH PRODUCT IS BUILT (id | category | parts, from the concept component drawings):",
+  BUILD_TEXT,
+  "When someone asks what a product is made of, how it's built, its parts or materials, or anything a manufacturer would ask, answer from these parts in plain words (a short list in a sentence or two is fine), say these come from the concept drawing and get confirmed with a manufacturer, and show the drawing by adding the line MATCH: BUILD-<code> (for example MATCH: BUILD-SNK). You can add the design's own MATCH line too.",
   "",
   "Have a natural back-and-forth conversation. If a request is too broad to pick well (for example 'show me shoes'), ask ONE short, specific question at a time — like which category, or which season's colors — never a checklist.",
   "When you have enough, show the design(s): name each one, say in one or two warm, plain sentences why it fits, and suggest one next step (another colorway, a related category, or the guide page for the full collection). You can show up to 6 designs when someone asks for a set, like 'everything for fall' or 'all the sneakers'.",
@@ -54,7 +64,7 @@ function linkify(t){
 function shotHTML(d, eager){
   return '<div class="shot"><img src="'+esc(d.image)+'" alt="'+esc(d.name)+' — concept render" width="1264" height="848" decoding="async"'+(eager?'':' loading="lazy"')+'></div>';
 }
-function addMsg(role,text,extra,designs,withEmblem){
+function addMsg(role,text,extra,designs,withEmblem,withBuilds){
   var d=document.createElement('div');
   d.className='msg '+role+(extra?' '+extra:'');
   if(extra==='thinking') d.innerHTML='<span class="spin"></span> Thinking…';
@@ -62,6 +72,7 @@ function addMsg(role,text,extra,designs,withEmblem){
   else d.textContent=text;
   var pics=(designs||[]).slice(0,6).map(function(x){ return {design:x, src:x.image, title:x.name, caption:x.categoryLabel+' \u00b7 '+x.colorwayLabel+' colorway \u00b7 concept render', alt:x.name+', concept render', label:x.categoryLabel+' \u00b7 '+x.colorwayLabel}; });
   if(withEmblem) pics.unshift({src:F.EMBLEM.image, title:F.EMBLEM.title, caption:F.EMBLEM.caption, alt:'F.T.U. shield emblem', label:'The emblem'});
+  (withBuilds||[]).forEach(function(cat){ var b=F.BREAKDOWNS[cat]; if(b) pics.unshift({src:b.image, title:b.title, caption:b.parts.length+' parts \u00b7 concept render', alt:b.title+', labeled component diagram', label:'How it\u2019s built'}); });
   if(pics.length){
     var g=document.createElement('div'); g.className='msg-thumbs';
     pics.forEach(function(pc,k){
@@ -80,12 +91,14 @@ function addMsg(role,text,extra,designs,withEmblem){
 function greet(){ addMsg('assistant',"Hi — welcome to the F.T.T.U showroom. Tell me what you're into — sneakers, boots, heels, something for the snow, or just a season's colors — and I'll pull up the designs."); }
 
 /* ── pull MATCH lines out of a reply and resolve them against the catalog ── */
-var emblemAsked=false;
+var emblemAsked=false, builds=[];
 function extractMatches(text){
-  var found=[]; emblemAsked=false;
+  var found=[]; emblemAsked=false; builds=[];
   var clean=text.replace(/^[ \t]*MATCH:[ \t]*(.+)$/gim,function(_,id){
     var key=id.replace(/[^A-Za-z-]/g,'').toUpperCase();
     if(key==='EMBLEM'){ emblemAsked=true; return ''; }
+    var bm=key.match(/^BUILD-?([A-Z]{3})$/);
+    if(bm){ var cat=CAT_BY_CODE[bm[1]]; if(cat && builds.indexOf(cat)<0) builds.push(cat); return ''; }
     var d=F.byId(key); if(d && found.indexOf(d)<0) found.push(d); return '';
   }).replace(/\n{3,}/g,'\n\n').trim();
   return {clean:clean, matches:found};
@@ -122,6 +135,13 @@ function renderTop(d, featured){
     var a=document.createElement('a'); a.href='guide.html#cat-'+d.category;
     a.textContent='See all '+d.categoryLabel.toLowerCase()+' in the guide \u2192';
     nt.appendChild(a);
+    var bd=F.BREAKDOWNS[d.category];
+    if(bd){
+      var b2=document.createElement('button'); b2.type='button'; b2.className='build-link';
+      b2.textContent='See how it\u2019s built ('+bd.parts.length+' parts) \u2192';
+      b2.addEventListener('click',function(){ Lightbox.open([{src:bd.image, title:bd.title, caption:bd.parts.length+' parts \u00b7 concept render', alt:bd.title+', labeled component diagram'}],0); });
+      nt.appendChild(document.createElement('br')); nt.appendChild(b2);
+    }
   }
 }
 function renderShortlist(top, list, mode){
@@ -200,8 +220,9 @@ async function send(text){
     setStatus('live');
     var raw=(data&&data.text)?data.text:"No usable answer came back — try rephrasing.";
     var parsed=extractMatches(raw);
-    addMsg('assistant',parsed.clean||raw,null,parsed.matches,emblemAsked);
+    addMsg('assistant',parsed.clean||raw,null,parsed.matches,emblemAsked,builds.slice());
     conversation.push({role:'assistant',content:raw}); setCount(messageCount+1);
+    if(!parsed.matches.length && builds.length){ var lead=F.leadFor(builds[0],SEASON); if(lead) parsed.matches=[lead]; }
     applyMatches(parsed.matches);
     save();
   }catch(err){
@@ -248,7 +269,7 @@ $('matchShot').addEventListener('keydown', function(e){ if(e.key==='Enter'||e.ke
     conversation=saved.conversation;
     conversation.forEach(function(m){
       if(m.role==='user') addMsg('user',m.content);
-      else { var p=extractMatches(m.content); addMsg('assistant',p.clean||m.content,null,p.matches,emblemAsked); }
+      else { var p=extractMatches(m.content); addMsg('assistant',p.clean||m.content,null,p.matches,emblemAsked,builds.slice()); }
     });
     setCount(saved.count||conversation.length);
     var top=saved.top && F.byId(saved.top);
