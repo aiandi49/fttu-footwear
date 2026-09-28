@@ -302,3 +302,14 @@
   .shot.zoomable::after{content:""; position:absolute; right:8px; bottom:8px; width:28px; height:28px; border-radius:8px; background:rgba(6,16,21,0.62) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='white' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 6V2.5H6M10 2.5h3.5V6M13.5 10v3.5H10M6 13.5H2.5V10'/%3E%3C/svg%3E") center / 14px no-repeat; opacity:.85; transition:opacity .2s ease;}
   .shot.zoomable:hover::after{opacity:1;}
   .build-link{margin-top:8px; padding:0; border:0; background:none; cursor:pointer; color:var(--value); font:inherit; font-weight:600; font-size:calc(13.5px * var(--fs)); text-decoration:underline; text-underline-offset:3px; text-align:inherit;}
+
+  /* Hero copy over the graphic: semi-bold with an emboss (a tight edge behind every letter, a faint
+     highlight, then a soft halo) so it reads on the brightest part of the image. The graphic is unchanged. */
+  :root{--hero-emboss:0 1px 0 rgba(0,0,0,0.95), 0 -1px 0 rgba(255,255,255,0.16), 0 0 3px rgba(0,0,0,0.95), 0 2px 8px rgba(0,0,0,0.85), 0 6px 26px rgba(0,0,0,0.65);}
+  html[data-theme="light"]{--hero-emboss:0 1px 0 rgba(255,255,255,0.95), 0 -1px 0 rgba(14,29,36,0.10), 0 0 3px rgba(255,255,255,0.95), 0 2px 10px rgba(255,255,255,0.85), 0 6px 26px rgba(255,255,255,0.6);}
+  .hero p{font-weight:600; text-shadow:var(--hero-emboss);}
+  .hero-link{font-weight:700; text-shadow:var(--hero-emboss);}
+
+  /* Chat box: no scrollbar until the text actually reaches the maximum height (js turns it on). */
+  .composer textarea{overflow-y:hidden;}
+  .composer textarea::placeholder{white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
