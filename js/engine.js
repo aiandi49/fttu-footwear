@@ -200,7 +200,7 @@ function renderFeatured(){
 
 async function send(text){
   text=text.trim(); if(!text) return;
-  input.value=''; input.style.height='';
+  input.value=''; input.style.height=''; input.style.overflowY='';
   sendBtn.disabled=true;
   addMsg('user',text); conversation.push({role:'user',content:text}); setCount(messageCount+1); save();
   var thinking=addMsg('assistant','','thinking');
@@ -236,7 +236,13 @@ async function send(text){
 
 sendBtn.addEventListener('click',function(){ send(input.value); });
 input.addEventListener('keydown',function(e){ if(e.key==='Enter'&&!e.shiftKey){ e.preventDefault(); send(input.value); } });
-input.addEventListener('input',function(){ input.style.height='auto'; input.style.height=Math.min(Math.max(input.scrollHeight,42),110)+'px'; });
+input.addEventListener('input',function(){
+  /* scrollHeight leaves out the borders; add them so the box never ends up a few pixels short (that is what drew a scrollbar) */
+  input.style.height='auto';
+  var need=input.scrollHeight+(input.offsetHeight-input.clientHeight);
+  input.style.height=Math.min(Math.max(need,42),110)+'px';
+  input.style.overflowY=need>110?'auto':'hidden';
+});
 
 $('resetBtn').addEventListener('click',function(){
   conversation=[]; setCount(0); setStatus('');
