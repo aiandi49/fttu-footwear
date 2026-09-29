@@ -301,3 +301,39 @@
   .shot.zoomable{cursor:zoom-in;}
   .shot.zoomable::after{content:""; position:absolute; right:8px; bottom:8px; width:28px; height:28px; border-radius:8px; background:rgba(6,16,21,0.62) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='white' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2.5 6V2.5H6M10 2.5h3.5V6M13.5 10v3.5H10M6 13.5H2.5V10'/%3E%3C/svg%3E") center / 14px no-repeat; opacity:.85; transition:opacity .2s ease;}
   .shot.zoomable:hover::after{opacity:1;}
+  .build-link{margin-top:8px; padding:0; border:0; background:none; cursor:pointer; color:var(--value); font:inherit; font-weight:600; font-size:calc(13.5px * var(--fs)); text-decoration:underline; text-underline-offset:3px; text-align:inherit;}
+
+  /* Hero copy over the graphic: semi-bold with an emboss (a tight edge behind every letter, a faint
+     highlight, then a soft halo) so it reads on the brightest part of the image. The graphic is unchanged. */
+  :root{--hero-emboss:0 1px 0 rgba(0,0,0,0.95), 0 -1px 0 rgba(255,255,255,0.16), 0 0 3px rgba(0,0,0,0.95), 0 2px 8px rgba(0,0,0,0.85), 0 6px 26px rgba(0,0,0,0.65);}
+  html[data-theme="light"]{--hero-emboss:0 1px 0 rgba(255,255,255,0.95), 0 -1px 0 rgba(14,29,36,0.10), 0 0 3px rgba(255,255,255,0.95), 0 2px 10px rgba(255,255,255,0.85), 0 6px 26px rgba(255,255,255,0.6);}
+  .hero p{font-weight:600; text-shadow:var(--hero-emboss);}
+  .hero-link{font-weight:700; text-shadow:var(--hero-emboss);}
+
+  /* Chat box: no scrollbar until the text actually reaches the maximum height (js turns it on). */
+  .composer textarea{overflow-y:hidden;}
+  .composer textarea::placeholder{white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+
+  /* ── Headline accent word ("showroom."): bevel it so it lifts off the graphic.
+     Gradient-filled text can't use text-shadow (it bleeds through the letters), so a stack of
+     drop-shadows outlines the painted letters instead: light top edge, dark bottom edge, halo. ── */
+  .hero h1 .grad{filter:drop-shadow(0 -1px 0 rgba(255,255,255,0.35)) drop-shadow(0 1.5px 0 rgba(0,0,0,0.9)) drop-shadow(0 0 2px rgba(0,0,0,0.85)) drop-shadow(0 4px 14px rgba(0,0,0,0.6));}
+  html[data-theme="light"] .hero h1 .grad{filter:drop-shadow(0 -1px 0 rgba(255,255,255,0.95)) drop-shadow(0 1.5px 0 rgba(14,29,36,0.45)) drop-shadow(0 0 3px rgba(255,255,255,0.9)) drop-shadow(0 4px 14px rgba(255,255,255,0.55));}
+
+  /* ── "Prefer to browse?" link: same purple, set on the same kind of dark chip as the tag above the
+     headline, so it reads on any part of the image (and is a bigger target to tap). ── */
+  .hero-link{padding:8px 16px; border-radius:999px; background:var(--chip); border:1px solid var(--card-line); text-shadow:none;}
+  .hero-link:hover{border-color:var(--lav-soft);}
+
+  /* ── Chat bubble and "Ask anything" box: warmer blue instead of near-black (dark theme only). ── */
+  :root{--bubble:rgba(38,44,92,0.62);}
+  html[data-theme="light"]{--bubble:var(--well);}
+  .msg.assistant, .composer textarea{background:var(--bubble);}
+
+  /* ── Microphone: a real button, big enough for a thumb (44px; 48px on touch screens). ── */
+  .mic, .composer .mic{width:44px; height:44px; border-radius:50%; border:1.5px solid rgba(167,139,250,0.6); background:var(--bubble); color:var(--text); transition:border-color .15s, background .15s;}
+  .mic svg{width:20px; height:20px;}
+  .mic:hover{border-color:var(--lav-soft); color:var(--text);}
+  .mic.on{border-color:#ff8a7a; background:rgba(255,138,122,0.16);}
+  @media (min-width:1100px){ .composer .mic{width:44px;} }
+  @media (pointer:coarse){ .mic, .composer .mic{width:48px; height:48px;} }
